@@ -17,11 +17,17 @@ public enum KolcsonzesEredmeny
 // 2–5. feladat: közös adatok és működés.
 public class KolcsonozhetoEszkoz
 {
-    private bool kolcsonozve = false;
+    private bool kolcsonozve;
     private decimal napiDij;
 
     public string Megnevezes { get; }
     public bool Kolcsonozve => kolcsonozve;
+    //ugyanez másképp:
+    //public bool Kolcsonozve
+    //{
+    //    get { return kolcsonozve; }
+    //}
+    //ez nem inicializál
 
     public decimal NapiDij
     {
@@ -41,7 +47,7 @@ public class KolcsonozhetoEszkoz
     {
         if (string.IsNullOrWhiteSpace(megnevezes))
             throw new ArgumentException("A megnevezés nem lehet üres.", nameof(megnevezes));
-
+        kolcsonozve = false; 
         Megnevezes = megnevezes;
         NapiDij = napiDij;
     }
@@ -216,8 +222,6 @@ public static class Program
         Console.WriteLine("\n--- Öt LINQ-lekérdezés az eredeti hat eszközre ---");
         LekerdezesekKiirasa(eszkozok);
 
-        // Szorgalmi: csak az alapfeladat után bővítünk, így annak eredményei
-        // előbb a feladatlapon megadott hat eszközzel is ellenőrizhetők.
         Console.WriteLine("\n--- Szorgalmi: SUP hozzáadása ---");
         KolcsonozhetoEszkoz sup = new SupDeszka("Túra SUP", 5000m, 120);
         eszkozok.Add(sup);
@@ -244,7 +248,7 @@ public static class Program
         Console.WriteLine(eszkoz);
     }
 
-    // 13. feladat: ugyanaz az öt lekérdezés az eredeti és a bővített listára.
+    // 13. feladat:
     private static void LekerdezesekKiirasa(List<KolcsonozhetoEszkoz> eszkozok)
     {
         Console.WriteLine("1. Szabad eszközök névsorban:");
